@@ -3,12 +3,18 @@ import { Paddle } from '../game/Paddle';
 import { Ball } from '../game/Ball';
 import { Block } from '../game/Block';
 
+interface DrawElement {
+  element: blessed.Widgets.BoxElement;
+}
+
 export class Screen {
   screen: blessed.Widgets.Screen;
   gameBox: blessed.Widgets.BoxElement;
   statusBox: blessed.Widgets.BoxElement;
   width: number;
   height: number;
+  private elements: DrawElement[] = [];
+  private messageBox: blessed.Widgets.BoxElement | null = null;
 
   constructor() {
     this.screen = blessed.screen({
@@ -40,6 +46,7 @@ export class Screen {
       width: '100%',
       height: 3,
       content: '',
+      tags: true,
       style: {
         fg: 'white',
         bg: 'blue',
@@ -63,20 +70,64 @@ export class Screen {
   }
 
   clear(): void {
-    this.gameBox.setContent('');
+    // Remove all dynamic elements
+    for (const item of this.elements) {
+      item.element.detach();
+    }
+    this.elements = [];
+
+    if (this.messageBox) {
+      this.messageBox.detach();
+      this.messageBox = null;
+    }
   }
 
   drawPaddle(paddle: Paddle): void {
-    this.drawAt(paddle.x, paddle.y, paddle.getChar(), 'white');
+    const element = blessed.box({
+      parent: this.gameBox,
+      top: paddle.y,
+      left: paddle.x,
+      width: paddle.width,
+      height: 1,
+      content: paddle.getChar(),
+      style: {
+        fg: 'white',
+        bold: true,
+      },
+    });
+    this.elements.push({ element });
   }
 
   drawBall(ball: Ball): void {
-    this.drawAt(ball.x, ball.y, ball.char, 'yellow');
+    const element = blessed.box({
+      parent: this.gameBox,
+      top: ball.y,
+      left: ball.x,
+      width: 1,
+      height: 1,
+      content: ball.char,
+      style: {
+        fg: 'yellow',
+        bold: true,
+      },
+    });
+    this.elements.push({ element });
   }
 
   drawBlock(block: Block): void {
     if (!block.destroyed) {
-      this.drawAt(block.x, block.y, block.getChar(), block.color);
+      const element = blessed.box({
+        parent: this.gameBox,
+        top: block.y,
+        left: block.x,
+        width: block.width,
+        height: 1,
+        content: block.getChar(),
+        style: {
+          fg: block.color,
+        },
+      });
+      this.elements.push({ element });
     }
   }
 
@@ -86,32 +137,29 @@ export class Screen {
     }
   }
 
-  drawAt(x: number, y: number, text: string, color: string): void {
-    const coloredText = `{${color}-fg}${text}{/${color}-fg}`;
-    const existingContent = this.gameBox.getContent();
-    const lines = existingContent.split('\n');
-
-    while (lines.length <= y) {
-      lines.push('');
-    }
-
-    const line = lines[y] || '';
-    const paddedLine = line.padEnd(x, ' ');
-    lines[y] = paddedLine.substring(0, x) + coloredText + paddedLine.substring(x + text.length);
-
-    this.gameBox.setContent(lines.join('\n'));
-  }
-
   updateStatus(score: number, lives: number, level: number, highScore: number): void {
+    const hearts = '{red-fg}' + '♥'.repeat(lives) + '{/red-fg}';
     this.statusBox.setContent(
-      `Score: ${score}  |  Lives: ${'❤'.repeat(lives)}  |  Level: ${level}  |  High Score: ${highScore}  |  [←/→] Move  [Space] Launch  [Q] Quit`
+      `Score: ${score}  |  Lives: ${hearts}  |  Level: ${level}  |  High Score: ${highScore}  |  [←/→] Move  [Space] Launch  [Q] Quit`
     );
   }
 
   showMessage(message: string, color: string = 'white'): void {
     const centerX = Math.floor(this.getGameWidth() / 2 - message.length / 2);
     const centerY = Math.floor(this.getGameHeight() / 2);
-    this.drawAt(centerX, centerY, message, color);
+
+    this.messageBox = blessed.box({
+      parent: this.gameBox,
+      top: centerY,
+      left: centerX,
+      width: message.length,
+      height: 1,
+      content: message,
+      style: {
+        fg: color,
+        bold: true,
+      },
+    });
   }
 
   render(): void {
