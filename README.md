@@ -1,6 +1,7 @@
 # block-break-cli
 
 [![npm version](https://badge.fury.io/js/block-break-cli.svg)](https://www.npmjs.com/package/block-break-cli)
+[![npm downloads](https://img.shields.io/npm/dm/block-break-cli.svg)](https://www.npmjs.com/package/block-break-cli)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-%3E%3D14.0.0-green.svg)](https://nodejs.org/)
 
@@ -33,7 +34,17 @@
 - **Customizable** - Adjust lives, levels, speed, paddle size, and game area via CLI options
 - **Fixed Game Area** - Consistent 60x24 game area centered in terminal (customizable)
 
+## Quick Start
+
+Try it instantly without installing:
+
+```bash
+npx block-break-cli
+```
+
 ## Installation
+
+Install globally to use the `block-break` command anywhere:
 
 ```bash
 npm install -g block-break-cli
