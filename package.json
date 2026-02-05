@@ -6,20 +6,35 @@
   "bin": {
     "block-break": "./bin/cli.js"
   },
+  "files": [
+    "dist",
+    "bin"
+  ],
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "tsc --watch"
+    "dev": "tsc --watch",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "cli",
     "game",
     "breakout",
     "terminal",
-    "block-breaker"
+    "block-breaker",
+    "arcade",
+    "retro"
   ],
-  "author": "",
+  "author": "Sato-Daichi",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sato-Daichi/block-break-cli.git"
+  },
+  "homepage": "https://github.com/Sato-Daichi/block-break-cli#readme",
+  "bugs": {
+    "url": "https://github.com/Sato-Daichi/block-break-cli/issues"
+  },
   "dependencies": {
     "blessed": "^0.1.81",
     "chalk": "^4.1.2",
