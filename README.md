@@ -12,12 +12,13 @@
 │  ######  ######  ######  ######  ######  ######  ######      │
 │  ######  ######  ######  ######  ######  ######  ######      │
 │                                                              │
-│                           O                                  │
+│                           ●                                  │
 │                                                              │
 │                                                              │
 │                        ==========                            │
+├──────────────────────────────────────────────────────────────┤
+│ Score: 120  |  Lives: ♥♥♥  |  Level: 1  |  Hi: 450           │
 └──────────────────────────────────────────────────────────────┘
- Score: 120  |  Lives: ♥♥♥  |  Level: 1  |  High Score: 450
 ```
 
 ## Features
@@ -29,7 +30,8 @@
 - **Lives System** - Start with 3 lives (customizable), don't let the ball fall!
 - **High Score** - Your best scores are saved locally
 - **Responsive Controls** - Smooth paddle movement with arrow keys
-- **Customizable** - Adjust lives, levels, speed, and paddle size via CLI options
+- **Customizable** - Adjust lives, levels, speed, paddle size, and game area via CLI options
+- **Fixed Game Area** - Consistent 60x24 game area centered in terminal (customizable)
 
 ## Installation
 
