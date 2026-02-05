@@ -51,9 +51,14 @@ export class Screen {
       height: 3,
       content: '',
       tags: true,
+      border: {
+        type: 'line',
+      },
       style: {
         fg: 'white',
-        bg: 'blue',
+        border: {
+          fg: 'gray',
+        },
       },
       padding: {
         left: 1,
