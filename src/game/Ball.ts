@@ -11,7 +11,7 @@ export class Ball {
     this.y = paddleY - 1;
     this.dx = 1;
     this.dy = -1;
-    this.char = 'O';
+    this.char = '●';
     this.active = false;
   }
 
