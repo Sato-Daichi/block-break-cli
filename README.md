@@ -58,6 +58,8 @@ block-break [options]
 | `--speed <ms>` | `-s` | Game speed (lower = faster) | 80 |
 | `--paddle-width <n>` | `-w` | Width of the paddle | 10 |
 | `--paddle-speed <n>` | `-p` | Paddle movement speed | 3 |
+| `--width <n>` | | Game area width (min: 40) | 60 |
+| `--height <n>` | | Game area height (min: 20) | 24 |
 | `--help` | `-h` | Show help message | - |
 | `--version` | `-v` | Show version | - |
 
@@ -78,6 +80,9 @@ block-break --paddle-width 15
 
 # Combine options
 block-break -l 5 -m 20 -w 12
+
+# Larger game area
+block-break --width 80 --height 30
 ```
 
 ## Controls

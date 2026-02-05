@@ -2,6 +2,7 @@ import * as blessed from 'blessed';
 import { Paddle } from '../game/Paddle';
 import { Ball } from '../game/Ball';
 import { Block } from '../game/Block';
+import { getConfig } from '../utils/Config';
 
 interface DrawElement {
   element: blessed.Widgets.BoxElement;
@@ -17,33 +18,36 @@ export class Screen {
   private messageBox: blessed.Widgets.BoxElement | null = null;
 
   constructor() {
+    const config = getConfig();
+
     this.screen = blessed.screen({
       smartCSR: true,
       title: 'Block Break CLI',
     });
 
-    this.width = (this.screen.width as number) || 80;
-    this.height = (this.screen.height as number) - 3 || 24;
+    // Use fixed size from config
+    this.width = config.gameWidth;
+    this.height = config.gameHeight;
 
     this.gameBox = blessed.box({
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: this.height,
+      top: 'center',
+      left: 'center',
+      width: this.width + 2, // +2 for border
+      height: this.height + 2, // +2 for border
       border: {
         type: 'line',
       },
       style: {
         border: {
-          fg: 'white',
+          fg: 'cyan',
         },
       },
     });
 
     this.statusBox = blessed.box({
-      top: this.height,
-      left: 0,
-      width: '100%',
+      top: '50%+' + Math.floor(this.height / 2 + 2),
+      left: 'center',
+      width: this.width + 2,
       height: 3,
       content: '',
       tags: true,
@@ -62,11 +66,11 @@ export class Screen {
   }
 
   getGameWidth(): number {
-    return (this.gameBox.width as number) - 2;
+    return this.width;
   }
 
   getGameHeight(): number {
-    return (this.gameBox.height as number) - 2;
+    return this.height;
   }
 
   clear(): void {
@@ -140,7 +144,7 @@ export class Screen {
   updateStatus(score: number, lives: number, level: number, highScore: number): void {
     const hearts = '{red-fg}' + '♥'.repeat(lives) + '{/red-fg}';
     this.statusBox.setContent(
-      `Score: ${score}  |  Lives: ${hearts}  |  Level: ${level}  |  High Score: ${highScore}  |  [←/→] Move  [Space] Launch  [Q] Quit`
+      `Score: ${score}  |  Lives: ${hearts}  |  Level: ${level}  |  Hi: ${highScore}`
     );
   }
 

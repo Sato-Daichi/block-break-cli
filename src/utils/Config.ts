@@ -4,6 +4,8 @@ export interface GameConfig {
   paddleWidth: number;
   paddleSpeed: number;
   maxLevel: number;
+  gameWidth: number;
+  gameHeight: number;
 }
 
 export const defaultConfig: GameConfig = {
@@ -12,6 +14,8 @@ export const defaultConfig: GameConfig = {
   paddleWidth: 10,
   paddleSpeed: 3,
   maxLevel: 10,
+  gameWidth: 60,
+  gameHeight: 24,
 };
 
 let currentConfig: GameConfig = { ...defaultConfig };

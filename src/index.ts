@@ -67,6 +67,26 @@ function parseArgs(): void {
         }
         break;
 
+      case '--width':
+        if (nextArg) {
+          const gameWidth = parseInt(nextArg, 10);
+          if (!isNaN(gameWidth) && gameWidth >= 40) {
+            setConfig({ gameWidth });
+          }
+          i++;
+        }
+        break;
+
+      case '--height':
+        if (nextArg) {
+          const gameHeight = parseInt(nextArg, 10);
+          if (!isNaN(gameHeight) && gameHeight >= 20) {
+            setConfig({ gameHeight });
+          }
+          i++;
+        }
+        break;
+
       case '--help':
       case '-h':
         showHelp();
@@ -92,6 +112,8 @@ Options:
   -s, --speed <ms>        Game speed in ms, lower = faster (default: ${defaultConfig.gameSpeed})
   -w, --paddle-width <n>  Paddle width (default: ${defaultConfig.paddleWidth})
   -p, --paddle-speed <n>  Paddle movement speed (default: ${defaultConfig.paddleSpeed})
+      --width <n>         Game area width (default: ${defaultConfig.gameWidth}, min: 40)
+      --height <n>        Game area height (default: ${defaultConfig.gameHeight}, min: 20)
   -h, --help              Show this help
   -v, --version           Show version
 
@@ -100,6 +122,7 @@ Examples:
   block-break --lives 5           Start with 5 lives
   block-break -l 5 -m 20          5 lives, 20 levels
   block-break --speed 50          Faster game speed
+  block-break --width 80 --height 30   Larger game area
 `);
 }
 
