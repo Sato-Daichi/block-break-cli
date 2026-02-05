@@ -1,3 +1,5 @@
+import { getConfig } from '../utils/Config';
+
 export class Paddle {
   x: number;
   y: number;
@@ -8,11 +10,12 @@ export class Paddle {
   maxX: number;
 
   constructor(screenWidth: number, screenHeight: number) {
-    this.width = 10;
+    const config = getConfig();
+    this.width = config.paddleWidth;
     this.height = 1;
     this.x = Math.floor((screenWidth - this.width) / 2);
     this.y = screenHeight - 3;
-    this.speed = 3;
+    this.speed = config.paddleSpeed;
     this.minX = 1;
     this.maxX = screenWidth - this.width - 1;
   }

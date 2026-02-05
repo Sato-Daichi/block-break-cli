@@ -1,3 +1,5 @@
+import { getConfig } from '../utils/Config';
+
 export interface LevelConfig {
   level: number;
   ballSpeed: number;
@@ -7,18 +9,20 @@ export interface LevelConfig {
 
 export class LevelManager {
   currentLevel: number;
-  maxLevel: number;
 
   constructor() {
     this.currentLevel = 1;
-    this.maxLevel = 10;
+  }
+
+  get maxLevel(): number {
+    return getConfig().maxLevel;
   }
 
   getConfig(): LevelConfig {
     return {
       level: this.currentLevel,
       ballSpeed: Math.min(50 + this.currentLevel * 5, 100),
-      paddleSpeed: 3,
+      paddleSpeed: getConfig().paddleSpeed,
       rows: Math.min(3 + this.currentLevel, 8),
     };
   }
